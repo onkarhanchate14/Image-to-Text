@@ -29,9 +29,23 @@ try:
 except:
     os.system("pip3 install unicodedata2")
 
+def findIfFileIsInstalled(path):
+    isFile = os.path.isfile(path)
+    print(isFile)
+    return not isFile
+
+if findIfFileIsInstalled('C:\Program Files\Tesseract-OCR\\tesseract.exe'):
+    os.system("curl https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v5.0.1.20220118.exe -O tesseract.exe")
+    os.system("start tesseract-ocr-w64-setup-v5.0.1.20220118.exe")
+
 ImageFileDir = ""
 def MainFun():
-    
+    path_to_tesseract = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+    while(findIfFileIsInstalled(path_to_tesseract)):
+        continue
+    time.sleep(5)
+
     def GetImageFileDir():
         global ImageFileDir
         def openfile():
@@ -59,10 +73,9 @@ def MainFun():
         return lst[:]
     ImageList = AllImages()
     # print(ImageList)
-    path_to_tesseract = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
     # image_path = r"C:\Users\Hp\Pictures\Screenshots\\"+ImageList[1]
     pdf = FPDF()
-    for i in range(10):
+    for i in range(len(ImageList)):
         image_path = ImageFileDir[0]+"\\"+ImageList[i]
         img = Image.open(image_path)
         pytesseract.tesseract_cmd = path_to_tesseract
@@ -105,49 +118,42 @@ def animated_loading():
 | |     
 | |___ 
  \____|
-
               ''','''
   ____    _  
  / ___|  / \  
 | |     / _ \ 
 | |___ / ___ \ 
  \____/_/   \_\\
-
               ''','''
   ____    _    ____  
  / ___|  / \  / ___|
 | |     / _ \ \___ \\
 | |___ / ___ \ ___) |
  \____/_/   \_\____/
-
               ''','''
   ____    _    ____  ____  
  / ___|  / \  / ___|| __ )
 | |     / _ \ \___ \|  _ \\
 | |___ / ___ \ ___) | |_) |
  \____/_/   \_\____/|____/
-
               ''','''
   ____    _    ____  ____  _____ 
  / ___|  / \  / ___|| __ )| ____|
 | |     / _ \ \___ \|  _ \|  _| 
 | |___ / ___ \ ___) | |_) | |___
  \____/_/   \_\____/|____/|_____|
-
               ''','''
   ____    _    ____  ____  _____ ____  
  / ___|  / \  / ___|| __ )| ____|  _ \\
 | |     / _ \ \___ \|  _ \|  _| | |_) |
 | |___ / ___ \ ___) | |_) | |___|  _ <
  \____/_/   \_\____/|____/|_____|_| \_\\
-
               ''','''
   ____    _    ____  ____  _____ ____   ____ 
  / ___|  / \  / ___|| __ )| ____|  _ \ / ___|
 | |     / _ \ \___ \|  _ \|  _| | |_) | |  _ 
 | |___ / ___ \ ___) | |_) | |___|  _ <| |_| |
  \____/_/   \_\____/|____/|_____|_| \_\\____|
-
               ''']
     frames = frames+frames[::-1]
     for char in frames:
@@ -169,6 +175,7 @@ def animated():
         animated_loading()
     print("")
 flag = True
+
 def createDir():
     directory = "GEN_PDF"
     
@@ -201,6 +208,3 @@ print('''Tool made by:                _
  \___\__,_|___/_.__/ \___|_|  \__, |
                               |___/ 
 ''')
-    
-    
-    
